@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { supabase } from '../utils/supabaseClient';
 
 const Bar = () => {
   // Define the categories and their respective activities with colors and lengths
