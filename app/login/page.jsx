@@ -15,10 +15,10 @@ const page = () => {
   return (
     <section className="bg-white h-screen flex justify-between items-center px-36 pt-12">
       <div className="flex-col justify-center items-center ">
-        <h1 className="text-black font-bold text-[52px] mb-20">Log in</h1>
+        <h1 className="text-black font-bold text-[52px] mb-12">Log in</h1>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email:</label>
+          <div className="m-0 p-0">
+            <label htmlFor="email"></label>
             <input
               type="email"
               required
@@ -30,8 +30,8 @@ const page = () => {
               className="bg-[#000000] w-[565px] h-[60px] rounded-lg p-6 flex items-center mb-5 font-semibold text-[#ffffff] opacity-20"
             />
           </div>
-          <div>
-            <label htmlFor="password">Password:</label>
+          <div className="m-0 p-0">
+            <label htmlFor="password"></label>
             <input
               type="password"
               required
