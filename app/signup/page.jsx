@@ -3,19 +3,19 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-const page = () => {
+const signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Login with:", email, password);
+    console.log("Signup with:", email, password);
   };
 
   return (
     <section className="bg-white h-screen flex justify-between items-center px-36 pt-12">
       <div className="flex-col justify-center items-center ">
-        <h1 className="text-black font-bold text-[52px] mb-12">Log in</h1>
+        <h1 className="text-black font-bold text-[52px] mb-12">Create Account</h1>
         <form onSubmit={handleSubmit}>
           <div className="m-0 p-0">
             <label htmlFor="email"></label>
@@ -47,16 +47,12 @@ const page = () => {
             type="submit"
             className="bg-[#DE483A] w-[565px] h-[60px] cursor-pointer rounded-lg p-6 flex items-center mb-10 text-white justify-center font-semibold"
           >
-            Log In
+            Sign up with email
           </button>
         </form>
 
-        <p className="underline text-black mb-4 font-semibold cursor-pointer inline-block">
-          Create Account
-        </p>
-        <br/>
-        <p className="underline text-black font-semibold cursor-pointer inline-block">
-          Forgot Password?
+        <p className="text-black font-semibold cursor-pointer text-center">
+          Already signed up? Go to <a href="/login" className="underline">Login</a>
         </p>
       </div>
       <div className="flex justify-center items-center mr-24">
@@ -66,4 +62,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default signup;

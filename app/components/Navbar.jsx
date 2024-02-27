@@ -4,23 +4,27 @@ const Navbar = () => {
   return (
     <div className="px-36 top-3 w-full absolute bg-white flex justify-between items-center">
       <div className="flex">
-        <div className=" text-slate-800 text-base font-extrabold font-['Inter'] uppercase">
-          Daily Circle
-        </div>
+        <a href="/">
+          <div className=" text-slate-800 text-base font-extrabold font-['Inter'] uppercase cursor-pointer">
+            Daily Circle
+          </div>
+        </a>
       </div>
 
       <div className="flex gap-8 items-center">
-        <div className="text-right text-slate-500 text-base font-bold font-['Inter'] leading-7">
+        <div className="text-right text-slate-500 text-base font-bold font-['Inter'] leading-7 cursor-pointer">
           Support
         </div>
-        <div className="text-right text-slate-500 text-base font-bold font-['Inter'] leading-7">
+        <div className="text-right text-slate-500 text-base font-bold font-['Inter'] leading-7 cursor-pointer">
           Blog
         </div>
-        <div className="text-right text-slate-500 text-base font-bold font-['Inter'] leading-7">
+        <div className="text-right text-slate-500 text-base font-bold font-['Inter'] leading-7 cursor-pointer">
           Product
         </div>
-        <div className="w-[117px] h-[39px] bg-red-500 rounded-[10px] flex justify-center items-center">
-          <p className="text-white text-sm font-semibold font-['Inter'] leading-7">Start for free</p>
+        <div className="w-[117px] h-[39px] bg-red-500 rounded-[10px] flex justify-center items-center cursor-pointer">
+          <p className="text-white text-sm font-semibold font-['Inter'] leading-7">
+            Start for free
+          </p>
         </div>
       </div>
     </div>

@@ -4,16 +4,26 @@ import Navbar from "./components/Navbar";
 
 export default function Home() {
   return (
-    <main className="bg-white flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="w-[1440px] h-[1024px] relative">
-        <div className="left-[379px] top-[100px] absolute text-center text-black text-[70px] font-bold font-['Inter']">
+    <main className="bg-white flex min-h-screen justify-center p-16">
+      <div className="w-[1440px] h-[1024px] flex-col items-center">
+        <div className=" text-center text-black text-[70px] font-bold font-['Inter'] mt-12 mb-4">
           Sketch out your life.
         </div>
-        <div className="left-[532px] top-[210px] absolute text-center text-black text-xl font-bold font-['Inter'] leading-normal">
+        <div className="text-center text-black text-xl font-bold font-['Inter'] leading-normal mb-8">
           The new simple way to journal.
           <br />
           Keep track of every aspect of your life.{" "}
         </div>
+        <div className="flex justify-center">
+        <Link href="/dashboard">
+            <div className="w-[165px] h-[55px] flex mb-6 justify-center items-center bg-red-500 rounded-[10px] border">
+              <p className="flex justify-center items-center text-center text-white text-base font-semibold font-['Inter'] leading-normal">
+                Start for free
+              </p>
+            </div>
+        </Link>
+        </div>
+        
         <div className="w-[824px] h-[492.56px] left-[307px] top-[458px] absolute">
           <Image
             width={262}
@@ -52,14 +62,7 @@ export default function Home() {
 <img className="w-[139px] h-[141px] left-[228px] top-[161px] absolute" src="https://via.placeholder.com/139x141" /> 
 <img className="w-[534px] h-[484px]" src="https://via.placeholder.com/534x484" />*/}
         </div>
-        <Link href="/dashboard">
-          <div className="w-[165px] h-[55px] left-[637px] top-[327px] absolute">
-            <div className="w-[165px] h-[55px] left-0 top-0 absolute bg-red-500 rounded-[10px] border" />
-            <div className="w-[132.57px] h-[29.27px] left-[16px] top-[13px] absolute text-center text-white text-base font-semibold font-['Inter'] leading-normal">
-              Start for free
-            </div>
-          </div>
-        </Link>
+        
       </div>
     </main>
   );
