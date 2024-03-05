@@ -7,10 +7,48 @@ const page = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Login with:", email, password);
+    try {
+      const formData = {
+        username: email,
+        password: password
+      }
+
+      const data = await loginApi(formData);
+      console.log("Login Success, ", data);
+      window.alert(data.message);
+
+    } catch (err) {
+      console.log("Login Error: ", err);
+      window.alert(err);
+    }
   };
+
+  async function loginApi(formData) {
+    let data;
+    try {
+      const response = await fetch('http://localhost:3002/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      data = await response.json();
+      console.log('data:', data);
+      if (!response.ok) {
+        throw data.message;
+      }
+
+    } catch (e) {
+      console.log("LoginAPI ERR: ", e);
+      throw e;
+    }
+    return data;
+  }
 
   return (
     <section className="bg-white h-screen flex justify-between items-center px-36 pt-12">
@@ -54,7 +92,7 @@ const page = () => {
         <p className="underline text-black mb-4 font-semibold cursor-pointer inline-block">
           Create Account
         </p>
-        <br/>
+        <br />
         <p className="underline text-black font-semibold cursor-pointer inline-block">
           Forgot Password?
         </p>

@@ -8,10 +8,46 @@ const signup = () => {
   const [password, setPassword] = useState("");
   
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Signup with:", email, password);
+    try {
+      const formData = {
+        username: email,
+        password: password
+      }
+
+      const data = await signupApi(formData);
+      console.log("Signup Success, ", data);
+      window.alert(data.message);
+
+    } catch (err) {
+      console.log("Signup Error: ", err);
+      window.alert(err);
+    }
   };
+  async function signupApi(formData) {
+    let data;
+    try {
+      const response = await fetch('http://localhost:3002/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      data = await response.json();
+      console.log('data:', data.message);
+      if (!response.ok) {
+        throw data.message;
+      }
+    } catch (e) {
+      console.log("Signup ERR: ", e);
+      throw e;
+    }
+    return data;
+  }
 
   return (
     <section className="bg-white h-screen flex justify-between items-center px-36 pt-12">
