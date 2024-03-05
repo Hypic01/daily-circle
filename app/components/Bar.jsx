@@ -104,6 +104,7 @@ const Bar = () => {
           ))}
         </div>
       ))}
+      <button className="bg-red-500 w-[120px] h-[40px] rounded text-base font-bold font-['Inter'] self-center">Submit</button>
     </div>
   );
 };
