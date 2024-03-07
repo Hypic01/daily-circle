@@ -6,7 +6,7 @@ import React, { useState } from "react";
 const signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +20,7 @@ const signup = () => {
       const data = await signupApi(formData);
       console.log("Signup Success, ", data);
       window.alert(data.message);
+      // redirect to login page
 
     } catch (err) {
       console.log("Signup Error: ", err);
@@ -29,7 +30,7 @@ const signup = () => {
   async function signupApi(formData) {
     let data;
     try {
-      const response = await fetch('http://localhost:3002/auth/signup', {
+      const response = await fetch('http://54.176.7.56/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

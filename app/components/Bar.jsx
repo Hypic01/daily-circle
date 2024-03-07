@@ -42,16 +42,50 @@ const Bar = () => {
         prevCategories.map((category) =>
           category.name === categoryName
             ? {
-                ...category,
-                activities: category.activities.map((activity) =>
-                  activity.name === activityName
-                    ? { ...activity, score: Number(newScore) }
-                    : activity
-                ),
-              }
+              ...category,
+              activities: category.activities.map((activity) =>
+                activity.name === activityName
+                  ? { ...activity, score: Number(newScore) }
+                  : activity
+              ),
+            }
             : category
         )
       );
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // get token from local storage
+    const token = localStorage.getItem('user token');
+    // if token is not valid, kick redirect this user to home
+    if (token === null) {
+      console.log("No token for this user. Redirect this guy out");
+      // Perform redirection here, e.g., window.location.href = '/';
+      return;
+    }
+
+    // send post request 
+    try {
+
+      const response = await fetch('http://localhost:3002/record/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(categories),
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+      window.alert(responseData.message);
+
+    } catch (err) {
+      console.log("Submit Error: ", err);
+      window.alert(err);
     }
   };
 
@@ -69,8 +103,8 @@ const Bar = () => {
     if (error) {
       console.error('Error fetching scores:', error);
     } else {
-    //   setScores(data);
-        console.log("Success!")
+      //   setScores(data);
+      console.log("Success!")
     }
   };
 
@@ -103,9 +137,11 @@ const Bar = () => {
             </div>
           ))}
         </div>
-        
+
       ))}
-      <button className="bg-red-500 w-[120px] h-[40px] rounded text-base font-bold font-['Inter'] self-center">Submit</button>
+      <button className="bg-red-500 w-[120px] h-[40px] rounded text-base font-bold font-['Inter'] self-center"
+        onClick={handleSubmit}
+      >Submit</button>
     </div>
   );
 };

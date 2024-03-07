@@ -2,14 +2,17 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Login with:", email, password);
+
     try {
       const formData = {
         username: email,
@@ -17,9 +20,12 @@ const page = () => {
       }
 
       const data = await loginApi(formData);
-      console.log("Login Success, ", data);
+      // console.log("Login Success, ", data);
+      console.log("Data's token", data.token);
+      localStorage.setItem("user token", data.token);
       window.alert(data.message);
-
+      // redirect to dashboard
+      router.push('/dashboard');
     } catch (err) {
       console.log("Login Error: ", err);
       window.alert(err);
@@ -38,7 +44,6 @@ const page = () => {
       });
 
       data = await response.json();
-      console.log('data:', data);
       if (!response.ok) {
         throw data.message;
       }
@@ -89,9 +94,10 @@ const page = () => {
           </button>
         </form>
 
-        <p className="underline text-black mb-4 font-semibold cursor-pointer inline-block">
+        <a href="/signup" className="underline text-black mb-4 font-semibold cursor-pointer inline-block">
           Create Account
-        </p>
+        </a>
+
         <br />
         <p className="underline text-black font-semibold cursor-pointer inline-block">
           Forgot Password?
