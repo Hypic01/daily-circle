@@ -80,7 +80,7 @@ const Bar = () => {
       });
 
       const responseData = await response.json();
-      console.log(responseData);
+      console.log("RESPONSE Data: ", responseData);
       window.alert(responseData.message);
 
     } catch (err) {
