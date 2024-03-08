@@ -63,7 +63,6 @@ const Bar = () => {
     // if token is not valid, kick redirect this user to home
     if (token === null) {
       console.log("No token for this user. Redirect this guy out");
-      // Perform redirection here, e.g., window.location.href = '/';
       return;
     }
 
