@@ -69,7 +69,6 @@ const Bar = () => {
 
     // send post request 
     try {
-
       const response = await fetch('http://localhost:3002/record/submit', {
         method: 'POST',
         headers: {
