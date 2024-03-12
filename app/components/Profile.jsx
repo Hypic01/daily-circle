@@ -1,38 +1,30 @@
 import React from 'react'
+import { signOut, getAuth } from 'firebase/auth';
+import { app } from '../firebase/config.js';
+import { useRouter } from 'next/navigation';
 
 const Profile = () => {
+  const router = useRouter();
 
   const handleClick = async (e) => {
     e.preventDefault();
+    try {
+      const auth = getAuth();
+      await signOut(auth);
 
-    const data = await signoutApi();
+      window.alert('Sign out successfullly');
 
-    window.alert(data.message);
+      // delete token
+      localStorage.removeItem('user token');
+      // redirect to home
+      router.push('/');
+
+    } catch (error) {
+      console.error("Sign out Error", error);
+      window.alert('failed to sign out');
+    }
   };
 
-  async function signoutApi() {
-    try {
-      const response = await fetch('http://localhost:3002/auth/signout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      data = await response.json();
-      console.log('data:', data);
-      return data;
-
-    } catch (e) {
-      console.error(e);
-      return { message: 'Failed to sign out. Please try again.' };
-    }
-
-  }
   return (
     <div className="flex gap-4 items-center">
       <div className="w-[40px] h-[40px] rounded-xl bg-[#DE483A] cursor-pointer" />

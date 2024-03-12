@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Bar = () => {
+  const router = useRouter();
   // Define the categories and their respective activities with colors and lengths
   const [categories, setCategories] = useState([
     {
@@ -63,6 +65,8 @@ const Bar = () => {
     // if token is not valid, kick redirect this user to home
     if (token === null) {
       console.log("No token for this user. Redirect this guy out");
+      window.alert("You are not AUTHORIZED!");
+      router.push('/');
       return;
     }
 
@@ -79,7 +83,13 @@ const Bar = () => {
 
       const responseData = await response.json();
       console.log("RESPONSE Data: ", responseData);
-      window.alert(responseData.message);
+      if (response.status === 201) {
+        // if successfully recorded
+        window.alert(responseData.message);
+      } else {
+        window.alert(responseData.message);
+      }
+
 
     } catch (err) {
       console.log("Submit Error: ", err);
