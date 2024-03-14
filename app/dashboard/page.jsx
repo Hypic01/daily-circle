@@ -13,6 +13,10 @@ const Dashboard = () => {
   const today = new Date();
   const options = { month: "long", day: "numeric" };
   const todayDate = today.toLocaleDateString("en-US", options);
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+
   const [activePeriod, setActivePeriod] = useState("Today");
 
   const handlePeriodClick = (period) => {
@@ -24,9 +28,8 @@ const Dashboard = () => {
       "text-base font-bold font-['Inter'] px-4 py-2 rounded transition-colors";
     const activeStyles = "bg-red-500 text-white";
     const inactiveStyles = "text-black hover:bg-gray-200";
-    return `${baseStyles} ${
-      activePeriod === period ? activeStyles : inactiveStyles
-    }`;
+    return `${baseStyles} ${activePeriod === period ? activeStyles : inactiveStyles
+      }`;
   };
 
   const categoriesData = [
@@ -40,9 +43,9 @@ const Dashboard = () => {
     <div className="min-h-screen w-full bg-white flex flex-col md:flex-row">
       <div className="flex flex-col w-full md:w-1/3 lg:w-96 bg-slate-200 p-8 space-y-4 justify-between">
         {/* Calendar and sidebar content goes here */}
-        <Calendar />
+        <Calendar setSelectedDate={setSelectedDate} />
         <Profile />
-        
+
       </div>
       <div className="flex-grow flex flex-col p-8">
         <div className="flex gap-2 mb-4">
@@ -56,9 +59,9 @@ const Dashboard = () => {
             </button>
           ))}
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4 mt-8 text-center">{todayDate}</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4 mt-8 text-center">{selectedDate.toLocaleDateString("en-US", options)}</h1>
         <div className="flex-1 overflow-y-auto">
-          <Bar categories={categoriesData}/>
+          <Bar categories={categoriesData} selectedDate={selectedDate} />
           {/* Ensure the Bar component takes the full available space */}
         </div>
       </div>

@@ -2,39 +2,40 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const Bar = () => {
+const Bar = ({ selectedDate }) => {
   const router = useRouter();
   // Define the categories and their respective activities with colors and lengths
   const [categories, setCategories] = useState([
     {
       name: "Health",
       activities: [
-        { name: "Sleeping", color: "bg-green-500", score: 8 },
-        { name: "Eating", color: "bg-green-500", score: 8 },
-        { name: "Workout", color: "bg-green-500", score: 8 },
+        { name: "Sleeping", color: "bg-green-500", score: 5 },
+        { name: "Eating", color: "bg-green-500", score: 5 },
+        { name: "Workout", color: "bg-green-500", score: 5 },
       ],
     },
     {
       name: "Work",
       activities: [
-        { name: "Coding", color: "bg-blue-500", score: 8 },
-        { name: "Reading", color: "bg-blue-500", score: 8 },
-        { name: "Academic", color: "bg-blue-500", score: 8 },
+        { name: "Coding", color: "bg-blue-500", score: 5 },
+        { name: "Reading", color: "bg-blue-500", score: 5 },
+        { name: "Academic", color: "bg-blue-500", score: 5 },
       ],
     },
     {
       name: "Relationship",
       activities: [
-        { name: "Friends", color: "bg-red-500", score: 8 },
-        { name: "Family", color: "bg-red-500", score: 3 },
-        { name: "Romance", color: "bg-red-500", score: 2 },
+        { name: "Friends", color: "bg-red-500", score: 5 },
+        { name: "Family", color: "bg-red-500", score: 5 },
+        { name: "Romance", color: "bg-red-500", score: 5 },
       ],
     },
   ]);
 
-  const [scores, setScores] = useState([]);
+  // initialize with current Date
+  // const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Function to handle the edit button click
   const handleEditClick = (categoryName, activityName) => {
     // Prompt the user to enter a new score
     const newScore = prompt(`Enter new score for ${activityName}:`, 10);
@@ -72,17 +73,21 @@ const Bar = () => {
 
     // send post request 
     try {
+      const bodyContent = {
+        'date': selectedDate,
+        'categories': categories
+      };
+
       const response = await fetch('http://localhost:3002/record/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(categories),
+        body: JSON.stringify(bodyContent),
       });
 
       const responseData = await response.json();
-      console.log("RESPONSE Data: ", responseData);
       if (response.status === 201) {
         // if successfully recorded
         window.alert(responseData.message);
@@ -97,24 +102,77 @@ const Bar = () => {
     }
   };
 
-  useEffect(() => {
-    const date = new Date().toISOString().slice(0, 10); // format the date as YYYY-MM-DD
-    fetchScores(date);
-  }, []);
+  const fetchScores = async () => {
+    setIsLoading(true);
 
-  const fetchScores = async (date) => {
-    const { data, error } = await supabase
-      .from('scores')
-      .select('*')
-      .eq('date', date);
+    // get token from local storage
+    const token = localStorage.getItem('user token');
+    // if token is not valid, kick redirect this user to home
+    if (token === null) {
+      console.log("No token for this user. Redirect this guy out");
+      window.alert("You are not AUTHORIZED! Log in again please");
+      router.push('/');
+      setIsLoading(false);
+      return;
+    }
 
-    if (error) {
-      console.error('Error fetching scores:', error);
-    } else {
-      //   setScores(data);
-      console.log("Success!")
+    const formattedDate = selectedDate.toISOString().slice(0, 10);
+    try {
+      const response = await fetch(`http://localhost:3002/summary/daily?date=${formattedDate}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+
+      if (response.status === 403) {
+        console.log("Token expired. get this guy out");
+        window.alert("token expired! log in please");
+        router.push('/');
+        setIsLoading(false);
+        return;
+      }
+
+      const data = await response.json();
+
+      // if nothing returned from backend set all equal to before but set all score to 0
+      if (data.length == 0) {
+        setCategories(categories => categories.map(category => ({
+          ...category,
+          activities: category.activities.map(activity => ({
+            ...activity,
+            score: 0
+          }))
+        })));
+        return;
+      }
+      setCategories((prevCategories) =>
+        prevCategories.map((category) => ({
+          ...category,
+          activities: category.activities.map((activity) => {
+            const newData = data.find((d) => d.small_category === activity.name.toLowerCase());
+            return {
+              ...activity,
+              score: newData ? newData.rating : 0,
+            };
+          }),
+        }))
+      );
+    } catch (error) {
+      console.error('Error fetching daily scores:', error);
+      // Handle error (e.g., show a message to the user)
+      window.alert('error fetching scores');
+    } finally {
+      setIsLoading(false); // End loading
     }
   };
+
+  useEffect(() => {
+    if (!isLoading) {
+      fetchScores();
+    }
+  }, [selectedDate]);
 
   return (
     <div className="flex flex-col justify-between h-full">
