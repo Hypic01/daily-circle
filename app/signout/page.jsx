@@ -15,7 +15,7 @@ const signout = () => {
 
   async function signoutApi() {
     try {
-      const response = await fetch('http://localhost:3002/auth/signout', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/signout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

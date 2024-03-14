@@ -35,7 +35,7 @@ const page = () => {
   async function loginApi(formData) {
     let data;
     try {
-      const response = await fetch('http://localhost:3002/auth/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

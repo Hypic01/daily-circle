@@ -78,7 +78,7 @@ const Bar = ({ selectedDate }) => {
         'categories': categories
       };
 
-      const response = await fetch('http://localhost:3002/record/submit', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/record/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ const Bar = ({ selectedDate }) => {
 
     const formattedDate = selectedDate.toISOString().slice(0, 10);
     try {
-      const response = await fetch(`http://localhost:3002/summary/daily?date=${formattedDate}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/summary/daily?date=${formattedDate}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

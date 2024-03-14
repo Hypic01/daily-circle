@@ -17,7 +17,7 @@ const signup = () => {
   async function signupApi(formData) {
     let data;
     try {
-      const response = await fetch("http://54.176.7.56/auth/signup", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
