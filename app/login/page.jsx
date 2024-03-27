@@ -45,11 +45,12 @@ const page = () => {
 
       data = await response.json();
       if (!response.ok) {
+        console.log(data, "login API not ok!");
         throw data.message;
       }
 
     } catch (e) {
-      console.log("LoginAPI ERR: ", e);
+      console.log("Login API ERR: ", e);
       throw e;
     }
     return data;
