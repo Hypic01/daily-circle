@@ -26,6 +26,14 @@ const Navbar = () => {
             Start for free
           </p>
         </div>
+        <a href='/login'>
+          <div className="w-[117px] h-[39px] bg-red-500 rounded-[10px] flex justify-center items-center cursor-pointer">
+            <p className="text-white text-sm font-semibold font-['Inter'] leading-7">
+              Log In
+            </p>
+          </div>
+        </a>
+
       </div>
     </div>
   );

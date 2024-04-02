@@ -28,7 +28,7 @@ const Profile = () => {
   return (
     <div className="flex gap-4 items-center">
       <div className="w-[40px] h-[40px] rounded-xl bg-[#DE483A] cursor-pointer" />
-      <h1 className="font-bold text-black">Test</h1>
+      <h1 className="font-bold text-black">My Account</h1>
       <button
         onClick={handleClick}
         className="bg-[#CDCDCD] opacity-80 w-[85px] h-[42px] rounded-xl text-black font-base font-bold"
