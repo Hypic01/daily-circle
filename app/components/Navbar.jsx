@@ -21,11 +21,11 @@ const Navbar = () => {
         <div className="text-right text-slate-500 text-base font-bold font-['Inter'] leading-7 cursor-pointer">
           Product
         </div>
-        <div className="w-[117px] h-[39px] bg-red-500 rounded-[10px] flex justify-center items-center cursor-pointer">
+        {/* <div className="w-[117px] h-[39px] bg-red-500 rounded-[10px] flex justify-center items-center cursor-pointer">
           <p className="text-white text-sm font-semibold font-['Inter'] leading-7">
             Start for free
           </p>
-        </div>
+        </div> */}
         <a href='/login'>
           <div className="w-[117px] h-[39px] bg-red-500 rounded-[10px] flex justify-center items-center cursor-pointer">
             <p className="text-white text-sm font-semibold font-['Inter'] leading-7">

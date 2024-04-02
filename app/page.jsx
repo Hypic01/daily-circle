@@ -15,7 +15,7 @@ export default function Home() {
           Keep track of every aspect of your life.{" "}
         </div>
         <div className="flex justify-center">
-        <Link href="/dashboard">
+        <Link href="/signup">
             <div className="w-[165px] h-[55px] flex mb-6 justify-center items-center bg-red-500 rounded-[10px] border">
               <p className="flex justify-center items-center text-center text-white text-base font-semibold font-['Inter'] leading-normal">
                 Start for free
